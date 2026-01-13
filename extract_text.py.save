@@ -1,0 +1,51 @@
+import pdfplumber
+import os
+
+PDF_ROOT = "medical_docs"
+OUTPUT_ROOT = "extracted_text"
+
+print("DEBUG: Script started")
+print("DEBUG: PDF_ROOT exists:", os.path.exists(PDF_ROOT))
+
+os.makedirs(OUTPUT_ROOT, exist_ok=True)
+
+for root, dirs, files in os.walk(PDF_ROOT):
+    print("\nDEBUG: Entering folder:", root)
+    print("DEBUG: Files found:", files)
+
+    for file in files:
+        if file.lower().endswith(".pdf"):
+            print("DEBUG: PDF detected:", file)
+
+            pdf_path = os.path.join(root, file)
+
+            relative_path = os.path.relpath(root, PDF_ROOT)
+            output_folder = os.path.join(OUTPUT_ROOT, relative_path)
+            os.makedirs(output_folder, exist_ok=True)
+
+            output_file = file.replace(".PDF", ".txt").replace(".pdf", ".txt")
+            output_path = os.path.join(output_folder, output_file)
+
+            full_text = ""
+
+            try:
+                with pdfplumber.open(pdf_path) as pdf:
+                    print("DEBUG: Opened PDF:", pdf_path)
+                    for i, page in enumerate(pdf.pages):
+                        text = page.extract_text()
+                        if text:
+                            full_text += text + "\n"
+                        else:
+                            print(f"DEBUG: Page {i} has no extractable text")
+
+                with open(output_path, "w", encoding="utf-8") as f:
+                    f.write(full_text)
+
+                print("✅ Extracted:", pdf_path)
+
+            except Exception as e:
+                print("❌ ERROR reading:", pdf_path)
+                print("   ", e)
+
+print("\nDEBUG: Script finished")
+

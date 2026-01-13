@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clinical Decision Support Workspace</title>
+
+    <style>
+        /* -----------------------------
+           Global Styles
+        ----------------------------- */
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            color: #2c2c2c;
+        }
+
+        /* -----------------------------
+           Header
+        ----------------------------- */
+
+        .app-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dcdcdc;
+            padding: 20px 40px;
+        }
+
+        .app-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .app-header .subtitle {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* -----------------------------
+           Main Workspace Layout
+        ----------------------------- */
+
+        .workspace-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px 40px;
+        }
+
+        /* -----------------------------
+           Panels
+        ----------------------------- */
+
+        .panel {
+            background-color: #ffffff;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        .left-panel {
+            flex: 1;
+        }
+
+        .right-panel {
+            flex: 1;
+        }
+
+        /* -----------------------------
+           Panel Text
+        ----------------------------- */
+
+        .panel h2 {
+            margin-top: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .panel-note {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .placeholder {
+            background-color: #f9fafb;
+            border: 1px dashed #cfcfcf;
+            padding: 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* -----------------------------
+           Footer
+        ----------------------------- */
+
+        .app-footer {
+            background-color: #ffffff;
+            border-top: 1px solid #dcdcdc;
+            padding: 12px 40px;
+            font-size: 12px;
+            color: #555;
+        }
+        .form-section {
+    margin-bottom: 25px;
+}
+
+.form-section h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 6px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.form-row label {
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+.form-row input,
+.form-row select {
+    padding: 6px 8px;
+    font-size: 13px;
+    border: 1px solid #cfcfcf;
+    border-radius: 4px;
+}
+.inline-group {
+    display: flex;
+    gap: 10px;
+}
+
+.inline-group input {
+    flex: 1;
+}
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #2f6fed;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #2458c6;
+}
+.result-section {
+    margin-bottom: 12px;
+}
+
+.result-section p {
+    margin: 4px 0;
+    font-size: 13px;
+}
+
+.result-section ul {
+    padding-left: 18px;
+}
+
+.disclaimer {
+    margin-top: 12px;
+    font-size: 11px;
+    color: #666;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 6px;
+}
+.confidence-high {
+    color: #0b7a0b;
+    font-weight: bold;
+}
+
+.confidence-medium {
+    color: #b8860b;
+    font-weight: bold;
+}
+
+.confidence-low {
+    color: #8b0000;
+    font-weight: bold;
+}
+h3 {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #333;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Page Header -->
+    <header class="app-header">
+        <h1>Clinical Decision Support System</h1>
+        <p class="subtitle">Endocrinology & Metabolic Disorders</p>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="workspace-container">
+
+        <!-- LEFT PANEL : Clinical Inputs -->
+        <section class="panel left-panel">
+            <h2>Clinical Inputs</h2>
+
+            <p class="panel-note">
+                Enter patient vitals, laboratory values, and relevant clinical information.
+            </p>
+
+            <!-- Placeholder for form (we will add inputs step by step) -->
+            <form method="post">
+
+    <!-- =========================
+         Patient Context
+    ========================== -->
+
+    <div class="form-section">
+        <h3>Patient Context</h3>
+
+        <div class="form-row">
+            <label for="patient_id">Patient ID</label>
+            <input type="text" id="patient_id" name="patient_id" placeholder="Enter patient ID">
+        </div>
+
+        <div class="form-row">
+            <label for="age">Age (years)</label>
+            <input type="number" id="age" name="age" min="0" max="120" placeholder="Age">
+        </div>
+
+        <div class="form-row">
+            <label for="sex">Sex</label>
+            <select id="sex" name="sex">
+                <option value="">Select</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="other">Other / Not disclosed</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label for="visit_date">Visit Date</label>
+            <input type="date" id="visit_date" name="visit_date">
+        </div>
+    </div>
+    <!-- =========================
+     Vital Signs
+========================== -->
+
+<div class="form-section">
+    <h3>Vital Signs</h3>
+
+    <div class="form-row">
+        <label>Blood Pressure (mmHg)</label>
+        <div class="inline-group">
+            <input type="number" name="bp_systolic" placeholder="Systolic">
+            <input type="number" name="bp_diastolic" placeholder="Diastolic">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <label for="heart_rate">Heart Rate (bpm)</label>
+        <input type="number" id="heart_rate" name="heart_rate" placeholder="Heart rate">
+    </div>
+
+    <div class="form-row">
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" name="weight" placeholder="Weight">
+    </div>
+
+    <div class="form-row">
+        <label for="height">Height (cm)</label>
+        <input type="number" id="height" name="height" placeholder="Height">
+    </div>
+    <div class="form-row">
+    <label for="bmi">BMI (kg/m²)</label>
+    <input type="text" id="bmi" name="bmi" placeholder="Auto-calculated" readonly>
+    </div>
+    <div class="form-row">
+    <small id="bmi_status" style="font-size:12px;"></small>
+</div>
+
+
+
+</div>
+<!-- =========================
+     Laboratory Values
+========================== -->
+
+<div class="form-section">
+    <h3>Laboratory Values</h3>
+<div id="diabetes_labs">   
+    <div class="form-row" id="fbs_row">
+        <label for="fbs">Fasting Blood Glucose (mg/dL)</label>
+        <input type="number" id="fbs" name="fbs" placeholder="Fasting glucose">
+    </div>
+
+    <div class="form-row" id="hba1c_row">
+        <label for="hba1c">HbA1c (%)</label>
+        <input type="number" step="0.1" id="hba1c" name="hba1c" placeholder="HbA1c">
+    </div>
+     </div>
+<div id="thyroid_labs"> 
+    <div class="form-row" id="tsh_row">
+        <label for="tsh">TSH (mIU/L)</label>
+        <input type="number" step="0.01" id="tsh" name="tsh" placeholder="TSH">
+    </div>
+
+    <div class="form-row" id="ft4_row">
+        <label for="ft4">Free T4 (ng/dL)</label>
+        <input type="number" step="0.01" id="ft4" name="ft4" placeholder="Free T4">
+    </div>
+    </div>
+</div>
+<!-- =========================
+     Symptoms & Clinical History
+========================== -->
+
+<div class="form-section">
+    <h3>Symptoms & Clinical History</h3>
+
+    <div class="form-row">
+        <label>
+            <input type="checkbox" name="fatigue">
+            Fatigue
+        </label>
+    </div>
+
+    <div class="form-row">
+        <label>
+            <input type="checkbox" name="weight_gain">
+            Weight gain
+        </label>
+    </div>
+<div id="pcos_section" style="display: none;"> 
+        <div class="form-row" id="menstrual_row">
+        <label>
+            <input type="checkbox" name="menstrual_irregularity">
+            Menstrual irregularity
+        </label>
+    </div>
+ 
+    <div class="form-row" id="hirsutism_row">
+        <label>
+            <input type="checkbox" name="hirsutism">
+            Hirsutism
+        </label>
+    </div>
+</div>
+
+<div class="form-section">
+    <button type="submit" class="submit-btn" id="submitBtn" disabled>
+    Generate Clinical Assessment
+   </button>
+ </div>
+
+
+
+</form>
+
+        </section>
+
+        <!-- RIGHT PANEL : Decision Support Output -->
+        <section class="panel right-panel">
+            <h2>Clinical Decision Support</h2>
+
+            <p class="panel-note">
+                Generated clinical assessment and reasoning will be displayed here.
+            </p>
+
+            <!-- Placeholder for output -->
+                        {% if assessment.primary %}
+
+<!-- =========================
+     PRIMARY ASSESSMENT
+========================== -->
+<h3>Primary Assessment</h3>
+
+<div class="result-section">
+    <strong>Condition:</strong>
+    <p>{{ assessment.primary.condition }}</p>
+</div>
+
+<div class="result-section">
+    <strong>Risk Level:</strong>
+    <p class="
+    {% if assessment.primary.risk_level == 'High' %}confidence-low
+    {% elif assessment.primary.risk_level == 'Moderate' %}confidence-medium
+    {% else %}confidence-high{% endif %}
+">
+    {{ assessment.primary.risk_level }}
+</p>
+
+</div>
+
+<div class="result-section">
+    <strong>Confidence Level:</strong>
+    <p class="
+        {% if assessment.primary.confidence == 'High' %}confidence-high
+        {% elif assessment.primary.confidence == 'Medium' %}confidence-medium
+        {% else %}confidence-low{% endif %}
+    ">
+        {{ assessment.primary.confidence }}
+    </p>
+</div>
+
+<div class="result-section">
+    <strong>Clinical Findings:</strong>
+    <ul>
+        {% for finding in assessment.primary.clinical_findings %}
+            <li>{{ finding }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="result-section">
+    <strong>Clinical Reasoning:</strong>
+    <p>{{ assessment.primary.clinical_reasoning }}</p>
+</div>
+
+{% endif %}
+{% if assessment.secondary and assessment.secondary|length > 0 %}
+
+{% if assessment.primary.supporting_evidence and assessment.primary.condition != "Insufficient clinical data" %}
+
+<div class="result-section">
+
+    <button
+        type="button"
+        onclick="toggleEvidence()"
+        style="
+            margin-top: 8px;
+            padding: 6px 10px;
+            font-size: 12px;
+            background-color: #f0f0f0;
+            border: 1px solid #cfcfcf;
+            border-radius: 4px;
+            cursor: pointer;
+        "
+    >
+        📘 View Supporting Guideline Evidence
+    </button>
+
+    <div
+        id="evidence-box"
+        style="
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fafafa;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: pre-wrap;
+        "
+    >
+        <strong>Evidence Domain:</strong>
+        {{ assessment.primary.evidence_domain | capitalize }}
+
+        <hr style="margin: 6px 0;">
+
+        {{ assessment.primary.supporting_evidence }}
+    </div>
+
+</div>
+{% endif %}
+
+
+<hr style="margin: 15px 0;">
+
+<h3>Secondary Considerations</h3>
+
+<ul>
+    {% for sec in assessment.secondary %}
+        <li>
+            <strong>{{ sec.condition }}</strong> —
+            Risk: {{ sec.risk_level }},
+            Confidence: {{ sec.confidence }}
+        </li>
+    {% endfor %}
+</ul>
+
+{% endif %}
+
+
+
+        </section>
+
+    </div>
+
+    <!-- Footer / Disclaimer -->
+    <footer class="app-footer">
+        <p>
+            This system provides clinical decision support and does not replace
+            professional medical judgment.
+        </p>
+    </footer>
+
+<script>
+    const sexSelect = document.getElementById("sex");
+    const menstrualRow = document.getElementById("menstrual_row");
+    const hirsutismRow = document.getElementById("hirsutism_row");
+
+    function updateSexBasedUI() {
+        const sex = sexSelect.value;
+
+        if (sex !== "female") {
+            menstrualRow.style.display = "none";
+            hirsutismRow.style.display = "none";
+        } else {
+            menstrualRow.style.display = "block";
+            hirsutismRow.style.display = "block";
+        }
+    }
+
+    sexSelect.addEventListener("change", updateSexBasedUI);
+    window.onload = updateSexBasedUI;
+
+const fbsRow = document.getElementById("fbs_row");
+    const hba1cRow = document.getElementById("hba1c_row");
+    const tshRow = document.getElementById("tsh_row");
+    const ft4Row = document.getElementById("ft4_row");
+    const fatigueInput = document.querySelector("input[name='fatigue']");
+    const weightGainInput = document.querySelector("input[name='weight_gain']");
+    const systolicInput = document.querySelector("input[name='bp_systolic']");
+
+    function updateLabVisibility() {
+
+    const fatigue = fatigueInput.checked;
+    const weightGain = weightGainInput.checked;
+    const familyHistory = familyHistoryInput.checked;
+    const systolic = parseInt(systolicInput.value);
+
+    /* Thyroid labs */
+    if (fatigue || weightGain) {
+        tshRow.style.display = "block";
+        ft4Row.style.display = "block";
+    } else {
+        tshRow.style.display = "none";
+        ft4Row.style.display = "none";
+    }
+
+    /* Diabetes labs */
+if (systolic && systolic >= 130) {
+    fbsRow.style.display = "block";
+    hba1cRow.style.display = "block";
+} else {
+    fbsRow.style.display = "none";
+    hba1cRow.style.display = "none";
+}
+
+}
+document.querySelectorAll("input").forEach(input => {
+    input.addEventListener("change", updateLabVisibility);
+    input.addEventListener("input", updateLabVisibility);
+});
+
+
+    sexSelect.addEventListener("change", updateLabVisibility);
+    window.addEventListener("load", updateLabVisibility);
+</script>
+    <script>
+    const weightInput = document.getElementById("weight");
+    const heightInput = document.getElementById("height");
+    const bmiInput = document.getElementById("bmi");
+    const bmiStatus = document.getElementById("bmi_status");
+
+    function calculateBMI() {
+        const weight = parseFloat(weightInput.value);
+        const heightCm = parseFloat(heightInput.value);
+
+        if (!weight || !heightCm) {
+            bmiInput.value = "";
+            bmiStatus.innerText = "";
+            return;
+        }
+
+        const heightM = heightCm / 100;
+        const bmi = weight / (heightM * heightM);
+        const bmiValue = bmi.toFixed(1);
+
+        bmiInput.value = bmiValue;
+
+        // BMI Interpretation (UI only)
+        if (bmi < 18.5) {
+            bmiStatus.innerText = "Underweight";
+            bmiStatus.style.color = "#b58900";
+        } else if (bmi < 25) {
+            bmiStatus.innerText = "Normal BMI";
+            bmiStatus.style.color = "#2d7f2d";
+        } else if (bmi < 30) {
+            bmiStatus.innerText = "Overweight";
+            bmiStatus.style.color = "#d9822b";
+        } else {
+            bmiStatus.innerText = "Obese";
+            bmiStatus.style.color = "#c23030";
+        }
+    }
+
+    weightInput.addEventListener("input", calculateBMI);
+    heightInput.addEventListener("input", calculateBMI);
+</script>
+<script>
+    const sexInput = document.getElementById("sex");
+    const ageInput = document.getElementById("age");
+    const pcosSection = document.getElementById("pcos_section");
+
+    function updatePCOSVisibility() {
+        const sex = sexInput.value;
+        const age = parseInt(ageInput.value);
+
+        if (sex === "female" && age >= 12) {
+            pcosSection.style.display = "block";
+        } else {
+            pcosSection.style.display = "none";
+
+            // Clear PCOS checkboxes if hidden
+            const inputs = pcosSection.querySelectorAll("input");
+            inputs.forEach(input => input.checked = false);
+        }
+    }
+
+    sexInput.addEventListener("change", updatePCOSVisibility);
+    ageInput.addEventListener("input", updatePCOSVisibility);
+
+    
+</script>
+<script>
+    function toggleEvidence() {
+        const box = document.getElementById("evidence-box");
+        if (!box) return;
+
+        box.style.display = box.style.display === "none"
+            ? "block"
+            : "none";
+    }
+</script>
+<script>
+    const submitBtn = document.getElementById("submitBtn");
+    const allInputs = document.querySelectorAll("input, select");
+
+    function hasAnyClinicalData() {
+        for (const el of allInputs) {
+            if (el.type === "checkbox" && el.checked) return true;
+            if (el.type !== "checkbox" && el.value.trim() !== "") return true;
+        }
+        return false;
+    }
+
+    function updateSubmitState() {
+        submitBtn.disabled = !hasAnyClinicalData();
+    }
+
+    allInputs.forEach(el => {
+        el.addEventListener("input", updateSubmitState);
+        el.addEventListener("change", updateSubmitState);
+    });
+
+    window.addEventListener("load", updateSubmitState);
+</script>
+
+
+
+
+
+</body>
+</html>
