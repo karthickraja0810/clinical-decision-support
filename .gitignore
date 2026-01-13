@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Mac
+.DS_Store
+
+# Virtual env
+venv/
+.env
+
+# Large data (DO NOT PUSH)
+medical_docs/
+extracted_text/
+chunks/
+vector_db/
+
+# Embeddings / caches
+*.bin
+*.pickle
+*.sqlite3
